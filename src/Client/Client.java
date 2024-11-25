@@ -1,3 +1,5 @@
+package Client;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,11 +25,13 @@ public class Client {
 
             System.out.println("Connected to server.");
 
+            out.println(pseudo);
+
             new Thread(() -> {
                 try{
                     String serverMessage;
                     while ((serverMessage = in.readLine()) != null){
-                        System.out.println("Server : "+serverMessage);
+                        System.out.println(serverMessage);
                     }
                 } catch (IOException e){
                     System.out.println("Connection lost.");
@@ -41,7 +45,9 @@ public class Client {
             }).start();
 
             String userMessage;
-            while ((userMessage = in.readLine()) != null){
+            while ((userMessage = userInput.readLine()) != null){
+                if ("/exit".equals(userMessage))
+                    break;
                 out.println(userMessage);
             }
 
