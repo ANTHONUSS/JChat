@@ -49,6 +49,7 @@ class ClientHandler implements Runnable {
             try {
                 clientSocket.close();
                 server.removeClient(this);
+                server.broadcastMessage(pseudo+" left the chat", this);
                 System.out.println(pseudo+" disconnected.");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,7 +67,6 @@ class ClientHandler implements Runnable {
         switch (command) {
             case "/exit":
                 System.out.println(pseudo+" is exiting...");
-                server.broadcastMessage(pseudo+" left the chat", this);
                 try{
                     clientSocket.close();
                 }catch (IOException e){
