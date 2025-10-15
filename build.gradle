@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group = 'fr.anthonus'
+version = '1.0.0 - BETA'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.13.2'
+
+    // https://mvnrepository.com/artifact/org.glassfish.tyrus.bundles/tyrus-standalone-client
+    implementation 'org.glassfish.tyrus.bundles:tyrus-standalone-client:2.2.0'
+    // https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-server
+    implementation 'org.glassfish.tyrus:tyrus-server:2.2.0'
+    // https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-container-grizzly-server
+    implementation 'org.glassfish.tyrus:tyrus-container-grizzly-server:2.2.0'
+
+    // https://mvnrepository.com/artifact/org.jline/jline
+    implementation 'org.jline:jline:3.30.6'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'fr.anthonus.Main')
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
